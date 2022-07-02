@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
-import { postVideogame, getGenres } from '../actions/index'
+import { addGenre, getGenres } from '../actions/index'
+
 
 
 export default function AddVideogame(){
     const dispatch = useDispatch()
-    const genres = useSelector((state)=>state.genres)
+    const allGenres = useSelector((state) => state.genres)
+    const genresPost = useSelector((state) => state.genresPost )
 
     const [input, setInput] = useState({
         name: '', 
@@ -21,13 +23,24 @@ export default function AddVideogame(){
         dispatch(getGenres())
     }, [])
 
+    function handleGenreClick(e) {
+        
+        dispatch(addGenre(e.target.value))
+        console.log(e.target.value)
+    }
+
+    
+    
+
     return(
         <div>
-            <Link to='/home'><button>Volver</button></Link>
+            <Link to='/home'>
+                <button className="btn" >Volver</button>
+            </Link>
             <h1>Crear Juego</h1>
-            <form>
+            <form className="form" >
                 <div>
-                    <label>Nombre</label>
+                    <label className=".form input">Nombre</label>
                     <input
                     type = 'text'
                     value = {input.name}
@@ -35,7 +48,7 @@ export default function AddVideogame(){
                     />
                 </div>
                 <div>
-                    <label>Description</label>
+                    <label className=".form input">Description</label>
                     <input
                     type = 'text'
                     value = {input.description}
@@ -59,163 +72,23 @@ export default function AddVideogame(){
                     />
                 </div>
                 <div>
-                    <label>Generos</label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Action'
-                        name = 'Action'
-                        /> 
-                        Action
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Indie'
-                        name = 'Indie'
-                        /> 
-                        Indie
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Adventure'
-                        name = 'Adventure'
-                        /> 
-                        Adventure
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'RPG'
-                        name = 'RPG'
-                        /> 
-                        RPG
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Strategy'
-                        name = 'Strategy'
-                        /> 
-                        Strategy
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Shooter'
-                        name = 'Shooter'
-                        /> 
-                        Shooter
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Casual'
-                        name = 'Casual'
-                        /> 
-                        Casual
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Simulation'
-                        name = 'Simulation'
-                        /> 
-                        Simulation
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Puzzle'
-                        name = 'Puzzle'
-                        /> 
-                        Puzzle
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Arcade'
-                        name = 'Arcade'
-                        /> 
-                        Arcade
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Platformer'
-                        name = 'Platformer'
-                        /> 
-                        Platformer
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Racing'
-                        name = 'Racing'
-                        /> 
-                        Racing
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Massively Multiplayer'
-                        name = 'Massively Multiplayer'
-                        /> 
-                        Massively Multiplayer
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Sports'
-                        name = 'Sports'
-                        /> 
-                        Sports
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Fighting'
-                        name = 'Fighting'
-                        /> 
-                        Fighting
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Family'
-                        name = 'Family'
-                        /> 
-                        Family
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Board Games'
-                        name = 'Board Games'
-                        /> 
-                        Board Games
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Educational'
-                        name = 'Educational'
-                        /> 
-                        Educational
-                    </label>
-                    <label>
-                        <input
-                        type = 'checkbox'
-                        value = 'Card'
-                        name = 'Card'
-                        /> 
-                        Card
-                    </label>
-                    
+                    <label>Géneros</label>
+                    <select onChange={ e => handleGenreClick(e)}>
+                        <option value='All' key='unique1'>
+                            All
+                        </option>
+                        {allGenres.map((el) => {
+                            return (
+                                <option value={el.name} key={el.id}>{el.name}</option>
+                            )
+                        })}
+                    </select>
+                    <label>{
+                        genresPost.map(e => <>{ ` *${e}* ` }</>)
+                    }</label>
                 </div>
                 <div>
-                    <label>Plataformas</label>
+                    <label className=".form input">Plataformas</label>
                     <label></label>
                     <input
                     type = 'text'

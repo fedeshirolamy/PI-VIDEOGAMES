@@ -1,11 +1,11 @@
 import React from "react";
-import './card.css'
+import '../index.css'
 
-export default function Card({name, background_image, genres}){
+export default function Card({name, background_image, genres, index}){
     return(
-        <div className='container'>
-            <div className="card">
-                <h3>{name}</h3>
+        <section key={index}>
+            <article >
+                <h4>{name}</h4>
                 <img 
                 src={background_image} 
                 alt='img not found' 
@@ -18,13 +18,7 @@ export default function Card({name, background_image, genres}){
                 </div>
                 ))}
                 </h5> 
-            </div>
-             
-            
-            
-            
-            
-            
-        </div>
+            </article>
+        </section>
     )
 }

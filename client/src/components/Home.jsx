@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import  {getVideogames, genresFilter, createdFilter,orderByName}  from '../actions/index';
+import  {getVideogames, genresFilter, createdFilter,orderByName, getGenres}  from '../actions/index';
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
-import './Home.css'
+import '../index.css'
 
 export default function Home(){
     
     const dispatch = useDispatch();
-    const allGames = useSelector ((state)=>state.videogames)
+    const allGames = useSelector((state) => state.videogames)
+    const allGenres = useSelector((state) => state.genres)
     const [orden, setOrden] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [gamesPerPage, setGamesPerPage] = useState(15)
@@ -21,10 +22,16 @@ export default function Home(){
         setCurrentPage(pageNumber)
     }
 
+    useEffect(() => {
+        console.log('genres')
+        dispatch(getGenres());
+    },[allGames])
+
 
     useEffect(() => {
+        console.log('games')
         dispatch(getVideogames());
-    },[dispatch])
+    },[])
 
     function handleClick(e){
         e.preventDefault();
@@ -50,35 +57,23 @@ export default function Home(){
     return (
         <div className='all'>
             <h1>Videogames</h1>
-            <Link className="link" to='/videogame'>Crear juego</Link><br></br>
-            <button onClick={e=>{handleClick(e)}}>Volver a cargar los juegos</button>
-            <div>
+            <Link className="link" to='/videogame'>
+                <button className="btn" >Crear Juego</button>
+            </Link>
+            <button onClick={e=>{handleClick(e)}} className='btn'>Volver a cargar los juegos</button>
+            <div  >
                 <select onChange={e=>handleOrder(e)}>
                     <option value='rating'>Rating</option>
                     <option value='asc'>Ascendente</option>
                     <option value='desc'>Descendente</option>
                 </select>
                 <select onChange={e => handleFilterGenre(e)}>
-                    <option value='All'>Todos</option>
-                    <option value='Action'>Action</option>
-                    <option value='Indie'>Indie</option>
-                    <option value='Adventure'>Adventure</option>
-                    <option value='RPG'>RPG</option>
-                    <option value='Strategy'>Strategy</option>
-                    <option value='Shooter'>Shooter</option>
-                    <option value='Casual'>Casual</option>
-                    <option value='Simulation'>Simulation</option>
-                    <option value='Puzzle'>Puzzle</option>
-                    <option value='Arcade'>Arcade</option>
-                    <option value='Platformer'>Platformer</option>
-                    <option value='Racing'>Racing</option>
-                    <option value='Massively Multiplayer'>Massively Multiplayer</option>
-                    <option value='Sports'>Sports</option>
-                    <option value='Fighting'>Fighting</option>
-                    <option value='Family'>Family</option>
-                    <option value='Board Games'>Board Games</option>
-                    <option value='Educational'>Educational</option>
-                    <option value='Card'>Card</option>
+                    <option value='All' key='unique1'>All</option>
+                    {allGenres.map((el) => {
+                        return (
+                            <option value={el.name} key={el.id}>{el.name}</option>
+                        )
+                    })}
                 </select>
                 <select onChange={e => handleFilterCreated(e)}> 
                     <option value='All'>Api+DB Games</option>
@@ -93,19 +88,19 @@ export default function Home(){
 
                 <SearchBar/>
 
-                <div>
+                <ul className='products'>
                     {
-                    currentGames?.map((c)=>{
+                    currentGames?.map((c, index)=>{
                         return (
-                            <fragment>
+                            <li  key = {index} className='product'>
                                 <Link to={"/home" + c.id}>
                                     <Card name={c.name} background_image={c.background_image} genres={c.genres} key={c.id}/>
                                 </Link>
-                            </fragment>
+                            </li>
                         )
                     })
                 }
-                </div>
+                </ul>
             </div>
         </div>
     )

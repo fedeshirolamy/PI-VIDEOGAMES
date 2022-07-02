@@ -5,6 +5,12 @@ module.exports = (sequelize) => {
   // defino el modelo para VIDEOGAME
   // modelName / attributes / options
   sequelize.define('videogame', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,19 +29,15 @@ module.exports = (sequelize) => {
     rating: {
       type: DataTypes.INTEGER
     },
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true
+    createdInDb: {              //en caso de que querramos hacer un llamado solo a lo que esta en bd
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     },
-    // createdInDb: {              //en caso de que querramos hacer un llamado solo a lo que esta en bd
-    //   type: DataTypes.BOOLEAN,
-    //   allowNull: false,
-    //   defaultValue: true
-    // },
   }, 
-  {timestamps: true,
-      createdAt: 'creado',
-      updatedAt: false
-  });
+  // {timestamps: true,
+  //     createdAt: 'creado',
+  //     updatedAt: false
+    // }
+  );
 };

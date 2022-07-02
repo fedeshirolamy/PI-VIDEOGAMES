@@ -1,10 +1,11 @@
-import { CREATED_FILTER, VIDEOGAMES, GENRES_FILTER, ORDER_BY_NAME, GET_BY_NAME, POST_VIDEOGAME, GET_GENRES } from "../actions/index";
+import { CREATED_FILTER, VIDEOGAMES, GENRES_FILTER, ORDER_BY_NAME, GET_BY_NAME, POST_VIDEOGAME, GET_GENRES, ADD_GENRE } from "../actions/index";
 
 const initialState = {
     videogames: [],
     allGames: [],
     vgfilter : [],
-    genres: []
+    genres: [],
+    genresPost: []
 };
 
 function rootReducer (state = initialState, action){
@@ -22,7 +23,7 @@ function rootReducer (state = initialState, action){
             }
 
         case GENRES_FILTER:
-            const allGames = state.videogames
+            const allGames = state.allGames
             const genresFilter = action.payload==='All' ? allGames : allGames.filter(el=>el.genres.includes(action.payload))
             return{
                 ...state,
@@ -33,16 +34,27 @@ function rootReducer (state = initialState, action){
                 ...state,
                 genres: action.payload
             }
+        case ADD_GENRE:
+            const genresPosted = state.genresPost.concat(action.payload)
+            // console.log(genresPosted)
+            return {
+                ...state,
+                genresPost: genresPosted
+            }
         case POST_VIDEOGAME:
             return {
                 ...state,
             }
         case CREATED_FILTER:
-            const originVg = state.vgfilter
-             const originfilter = action.payload === 'DB' ? originVg.filter(p => p.origin === 'DB') : originVg.filter(p => p.origin === 'API')
+            const games = state.allGames;
+            const createdFilter = action.payload === 'DB' ?
+                games.filter(el => el.createdInDb) :
+                games.filter( el => !el.createdInDb )
              return {
-                  ...state,
-                  videogames: action.payload === 'All' ? state.vgfilter : originfilter
+                 ...state,
+                 videogames: action.payload === 'All' ?
+                     state.allGames :
+                     createdFilter
              }
         case ORDER_BY_NAME:
             if (action.payload === 'rating') {

@@ -16,15 +16,15 @@
 	display:block;
 	padding:10px 20px;
 	color:#fff;
-	background:#024959;
+	background:hsl(205, 78%, 60%);
 	text-decoration: none;
 }
 
 .paginacion ul li a:hover {
-	background:#037E8C;
+	background:#0a464d;
 }
 
 .paginacion ul li .active {
-	background:#037E8C;
+	background:#0a464d;
 	font-weight:bold;
 }

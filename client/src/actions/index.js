@@ -7,6 +7,7 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME"
 export const GET_BY_NAME = "GET_BY_NAME"
 export const GET_GENRES = "GET_GENRES"
 export const POST_VIDEOGAME = "POST_VIDEOGAME"
+export const ADD_GENRE = "ADD_GENRE"
 
 export function getVideogames() {
     return async function(dispatch) {
@@ -17,6 +18,13 @@ export function getVideogames() {
         }); 
     };
 };
+
+export function addGenre(payload) {
+    return {
+        type: ADD_GENRE,
+        payload
+    }
+}
 
 export function getGenres(){
     return async function(dispatch){

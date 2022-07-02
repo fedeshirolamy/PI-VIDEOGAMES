@@ -6,12 +6,12 @@ const axios = require('axios').default;
 const { Videogame, Genre } = require('../db');
 
 router.get('/', async (req, res) => {
+    
+    
     //busco en la DB si tengo juegos creados y me traigo todos
     let videogamesDb = await Videogame.findAll({
         include: Genre
     });
-    // console.log(videogamesDb)
-    //Parseo el objeto
     videogamesDb = JSON.stringify(videogamesDb);
     videogamesDb = JSON.parse(videogamesDb);
     //Aca dejo el arreglo de generos plano con solo los nombres de cada genero(llega array de objetos)
@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
         genres: el.genres.map(el => el.name)
     }), [])
     
+    //--------------------------------------------------------------------------------------------
     //QUERIES
     // si llega querie "name"
     if (req.query.name) {
@@ -36,10 +37,10 @@ router.get('/', async (req, res) => {
                     name: game.name,
                     background_image: game.background_image,
                     rating: game.rating,
-                    genres: game.genres.map(el => el.name)
+                    genres: game.genres.map(el => el.name),
+                    released: game.released,
                 }
             });
-
             //solo filtro los que coincidan con la busqueda
             const filteredGamesDb = videogamesDb.filter(g => g.name.toLowerCase().includes(req.query.name.toLowerCase()));
             //doy prioridad a la DB, y sumo todos, y corto el array en 15
@@ -48,7 +49,7 @@ router.get('/', async (req, res) => {
         } catch (err) {
             return console.log(err)
         }
-    } else {
+    }else {
         // SI NO ENTRO POT QUERIES --> voy a buscar todos los juegos a la API
         try {
             let pages = 0;
@@ -57,13 +58,22 @@ router.get('/', async (req, res) => {
             while (pages < 6) {
                 pages++;
                 //filtro solo la DATA que necesito enviar al FRONT
+
                 const gammesREADY = response.data.results.map(game => {
+                    let platformstr = []
+                    if (game.platforms) {
+                       for (i=0;i<game.platforms.length;i++) {
+                        platformstr.push(game.platforms[i].platform.name)
+                    } 
+                    }
 					return{
 						id: game.id,
                         name: game.name,
 						background_image: game.background_image,
-						rating: game.rating,
-                        genres: game.genres.map(el => el.name)
+                        rating: game.rating,
+                        released: game.released,
+                        genres: game.genres.map(el => el.name),
+                        platforms: platformstr.map(e=>e)
 					}
 				});
                 results = [...results, ...gammesREADY]
@@ -75,6 +85,40 @@ router.get('/', async (req, res) => {
             return res.sendStatus(500)
         }
     }
-});
+
+
+
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
 
 module.exports = router;

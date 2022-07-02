@@ -62,7 +62,7 @@ router.post('/', async (req, res, next) => {
         releaseDate, 
         rating, 
         genres,
-        //createdInDb, 
+        createdInDb, 
         platforms 
     } = req.body;
     platforms = platforms.join(', ')
@@ -74,7 +74,7 @@ router.post('/', async (req, res, next) => {
                 releaseDate,
                 rating,
                 platforms,
-                //createdInDb,
+                createdInDb,
             
         })
         const gameGenre = await Genre.findAll({
