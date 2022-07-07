@@ -1,11 +1,13 @@
-import { CREATED_FILTER, VIDEOGAMES, GENRES_FILTER, ORDER_BY_NAME, GET_BY_NAME, POST_VIDEOGAME, GET_GENRES, ADD_GENRE } from "../actions/index";
+import { CREATED_FILTER, VIDEOGAMES, GENRES_FILTER, ORDER_BY_NAME, GET_BY_NAME, POST_VIDEOGAME, GET_GENRES, ADD_GENRE, GET_PLATFORMS, ADD_PLATFORM } from "../actions/index";
 
 const initialState = {
     videogames: [],
     allGames: [],
     vgfilter : [],
     genres: [],
-    genresPost: []
+    platforms: [],
+    genresPost: [],
+    platformsPost: []
 };
 
 function rootReducer (state = initialState, action){
@@ -34,12 +36,24 @@ function rootReducer (state = initialState, action){
                 ...state,
                 genres: action.payload
             }
+        case GET_PLATFORMS:
+            return {
+                ...state,
+                platforms: action.payload
+            }
         case ADD_GENRE:
             const genresPosted = state.genresPost.concat(action.payload)
             // console.log(genresPosted)
             return {
                 ...state,
                 genresPost: genresPosted
+            }
+        case ADD_PLATFORM:
+            const platformsPosted = state.platformsPost.concat(action.payload)
+            // console.log(genresPosted)
+            return {
+                ...state,
+                platformsPost: platformsPosted
             }
         case POST_VIDEOGAME:
             return {

@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
-import { addGenre, getGenres } from '../actions/index'
-
-
+import { addGenre, addPlatform, getGenres, getPlatforms } from '../actions/index'
 
 export default function AddVideogame(){
     const dispatch = useDispatch()
     const allGenres = useSelector((state) => state.genres)
-    const genresPost = useSelector((state) => state.genresPost )
+    const allPlatforms = useSelector((state) => state.platforms)
+    const genresPost = useSelector((state) => state.genresPost)
+    const platformsPost = useSelector((state) => state.platformsPost)
+    console.log(platformsPost)
 
     const [input, setInput] = useState({
         name: '', 
@@ -23,14 +24,19 @@ export default function AddVideogame(){
         dispatch(getGenres())
     }, [])
 
+    useEffect(()=>{
+        dispatch(getPlatforms())
+    }, [])
+
     function handleGenreClick(e) {
-        
         dispatch(addGenre(e.target.value))
         console.log(e.target.value)
     }
 
-    
-    
+    function handlePlatformClick(e) {
+        dispatch(addPlatform(e.target.value))
+        console.log(e.target.value)
+    }
 
     return(
         <div>
@@ -88,13 +94,20 @@ export default function AddVideogame(){
                     }</label>
                 </div>
                 <div>
-                    <label className=".form input">Plataformas</label>
-                    <label></label>
-                    <input
-                    type = 'text'
-                    value = {input.platforms}
-                    name = 'platforms'
-                    />
+                    <label>Plataformas</label>
+                    <select onChange={ e => handlePlatformClick(e)}>
+                        <option value='All' key='unique2'>
+                            All
+                        </option>
+                        {allPlatforms.map((el) => {
+                            return (
+                                <option value={el.name} key={el.id}>{el.name}</option>
+                            )
+                        })}
+                    </select>
+                    <label>{
+                        platformsPost.map(e => <>{ ` *${e}* ` }</>)
+                    }</label>
                 </div>
             </form>
         </div>

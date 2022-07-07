@@ -6,8 +6,10 @@ export const CREATED_FILTER = "CREATED_FILTER"
 export const ORDER_BY_NAME = "ORDER_BY_NAME"
 export const GET_BY_NAME = "GET_BY_NAME"
 export const GET_GENRES = "GET_GENRES"
+export const GET_PLATFORMS = "GET_PLATFORMS"
 export const POST_VIDEOGAME = "POST_VIDEOGAME"
 export const ADD_GENRE = "ADD_GENRE"
+export const ADD_PLATFORM = "ADD_PLATFORM"
 
 export function getVideogames() {
     return async function(dispatch) {
@@ -26,11 +28,28 @@ export function addGenre(payload) {
     }
 }
 
+export function addPlatform(payload) {
+    return {
+        type: ADD_PLATFORM,
+        payload
+    }
+}
+
 export function getGenres(){
     return async function(dispatch){
         const info = await axios.get('http://localhost:3001/genres')
         return dispatch({
             type: GET_GENRES,
+            payload: info.data
+        })
+    }
+}
+
+export function getPlatforms(){
+    return async function(dispatch){
+        const info = await axios.get('http://localhost:3001/Platforms')
+        return dispatch({
+            type: GET_PLATFORMS,
             payload: info.data
         })
     }
