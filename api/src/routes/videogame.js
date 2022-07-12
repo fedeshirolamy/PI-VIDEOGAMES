@@ -59,6 +59,7 @@ router.post('/', async (req, res, next) => {
     let { 
         name, 
         description, 
+        background_image,
         releaseDate, 
         rating, 
         genres,
@@ -71,6 +72,7 @@ router.post('/', async (req, res, next) => {
             
                 name,
                 description,
+                background_image,
                 releaseDate,
                 rating,
                 platforms,

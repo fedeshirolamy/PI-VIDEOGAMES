@@ -9,19 +9,20 @@
 
 .paginacion ul li {
 	display:inline-block;
-	margin-right:10px;
+	margin-right: 8px;
 }
 
 .paginacion ul li a {
 	display:block;
 	padding:10px 20px;
-	color:#fff;
-	background:hsl(205, 78%, 60%);
+	border-radius: 5px;
+	color:#f3f3f3;
+	background:#74798c;
 	text-decoration: none;
 }
 
 .paginacion ul li a:hover {
-	background:#0a464d;
+	background:#1d2634;
 }
 
 .paginacion ul li .active {
