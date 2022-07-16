@@ -8,8 +8,8 @@ export const GET_BY_NAME = "GET_BY_NAME"
 export const GET_GENRES = "GET_GENRES"
 export const GET_PLATFORMS = "GET_PLATFORMS"
 export const POST_VIDEOGAME = "POST_VIDEOGAME"
-export const ADD_GENRE = "ADD_GENRE"
-export const ADD_PLATFORM = "ADD_PLATFORM"
+export const GET_DETAILS = "GET_DETAILS"
+
 
 export function getVideogames() {
     return async function(dispatch) {
@@ -21,17 +21,18 @@ export function getVideogames() {
     };
 };
 
-export function addGenre(payload) {
-    return {
-        type: ADD_GENRE,
-        payload
-    }
-}
-
-export function addPlatform(payload) {
-    return {
-        type: ADD_PLATFORM,
-        payload
+export function getDetails(id) {
+    return async function (dispatch) {
+        try {
+            const result = await axios.get('http://localhost:3001/videogame/' + id)
+            return dispatch({
+                type: GET_DETAILS,
+                payload: result.data
+            })
+        } catch(error) {
+            console.log(error)
+        }
+        
     }
 }
 

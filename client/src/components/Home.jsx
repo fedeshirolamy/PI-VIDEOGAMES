@@ -93,7 +93,7 @@ export default function Home(){
                     currentGames?.map((c, index)=>{
                         return (
                             <li  key = {index} className='product'>
-                                <Link to={"/home" + c.id}>
+                                <Link to={"/videogame/" + c.id}>
                                     <Card name={c.name} background_image={c.background_image} genres={c.genres} key={c.id}/>
                                 </Link>
                             </li>

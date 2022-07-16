@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
-import { addGenre, addPlatform, getGenres, getPlatforms, postVideogame } from '../actions/index'
+import { getGenres, getPlatforms, postVideogame } from '../actions/index'
+
+
+
 
 export default function AddVideogame(){
     const dispatch = useDispatch()
     const history = useHistory()
     const allGenres = useSelector((state) => state.genres)
     const allPlatforms = useSelector((state) => state.platforms)
-    const genresPost = useSelector((state) => state.genresPost)
-    const platformsPost = useSelector((state) => state.platformsPost)
-    console.log(platformsPost)
+    
 
     const [input, setInput] = useState({
         name: '', 
@@ -30,22 +31,13 @@ export default function AddVideogame(){
         dispatch(getPlatforms())
     }, [])
 
-    function handleGenreClick(e) {
-        dispatch(addGenre(e.target.value))
-        console.log(e.target.value)
-    }
-
-    function handlePlatformClick(e) {
-        dispatch(addPlatform(e.target.value))
-        console.log(e.target.value)
-    }
+    
 
     function handleChange(e) {
         setInput({
             ...input,
             [e.target.name]: e.target.value, 
         })
-        console.log(input)
     }
 
     function handleSelectGenres(e) {
@@ -79,6 +71,20 @@ export default function AddVideogame(){
         history.push('/home')
     }
 
+    function handleDelete(e) {
+        setInput({
+            ...input,
+            platforms: input.platforms.filter( plat => plat !== e )
+        })
+    }
+
+    function handleDeleteGenres(e) {
+        setInput({
+            ...input,
+            genres: input.genres.filter( gen => gen !== e )
+        })
+    }
+
 
     return(
         <div>
@@ -94,6 +100,7 @@ export default function AddVideogame(){
                     value = {input.name}
                     name='name'
                     onChange = {handleChange}    
+                    required
                     />
                 </div>
                 <div>
@@ -102,7 +109,9 @@ export default function AddVideogame(){
                     type = 'text'
                     value = {input.description}
                     name='description'
-                    onChange = {handleChange} 
+                        onChange={handleChange} 
+                    required
+                        
                     />
                 </div>
                 <div>
@@ -111,7 +120,9 @@ export default function AddVideogame(){
                     type = 'text'
                     value = {input. background_image}
                     name= 'background_image'
-                    onChange = {handleChange} 
+                        onChange={handleChange} 
+                    required
+                        
                     />
                 </div>
                 <div>
@@ -120,7 +131,7 @@ export default function AddVideogame(){
                     onChange = {handleChange} 
                     type = 'date'
                     value = {input.releaseDate}
-                    name = 'releaseDate'
+                        name='releaseDate'
                     />
                 </div>
                 <div>
@@ -129,7 +140,9 @@ export default function AddVideogame(){
                     onChange = {handleChange} 
                     type = 'number'
                     value = {input.rating}
-                    name = 'rating'
+                        name='rating'
+                    required
+                        
                     />
                 </div>
                 <div>
@@ -145,7 +158,13 @@ export default function AddVideogame(){
                             )
                         })}
                     </select>
-                    <ul><li>{input.genres.map(e=>e + " ,")}</li></ul>
+                    <ul>    
+                    {input.genres.map( ( e, index) =>
+                            <li key={index}>{e}
+                                <button onClick={()=>handleDeleteGenres(e)} >x</button>
+                            </li>
+                    )}
+                    </ul>
                 </div>
 
                 <div>
@@ -161,7 +180,13 @@ export default function AddVideogame(){
                             )
                         })}
                     </select>
-                    <ul><li>{input.platforms.map(e=>e + " ,")}</li></ul>
+                    <ul>    
+                    {input.platforms.map( ( e, index) =>
+                            <li key={index}>{e}
+                                <button onClick={()=>handleDelete(e)} >x</button>
+                            </li>
+                    )}
+                    </ul>
                 </div>
                 <button className="btn" type='submit'>crear personaje</button>
             </form>
