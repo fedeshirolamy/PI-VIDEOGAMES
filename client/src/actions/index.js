@@ -13,7 +13,7 @@ export const GET_DETAILS = "GET_DETAILS"
 
 export function getVideogames() {
     return async function(dispatch) {
-        const result = await axios.get('http://localhost:3001/videogames')
+        const result = await axios.get('/videogames')
         return dispatch({
             type: VIDEOGAMES,
             payload: result.data
@@ -24,7 +24,7 @@ export function getVideogames() {
 export function getDetails(id) {
     return async function (dispatch) {
         try {
-            const result = await axios.get('http://localhost:3001/videogame/' + id)
+            const result = await axios.get('/videogame/' + id)
             return dispatch({
                 type: GET_DETAILS,
                 payload: result.data
@@ -38,7 +38,7 @@ export function getDetails(id) {
 
 export function getGenres(){
     return async function(dispatch){
-        const info = await axios.get('http://localhost:3001/genres')
+        const info = await axios.get('/genres')
         return dispatch({
             type: GET_GENRES,
             payload: info.data
@@ -48,7 +48,7 @@ export function getGenres(){
 
 export function getPlatforms(){
     return async function(dispatch){
-        const info = await axios.get('http://localhost:3001/Platforms')
+        const info = await axios.get('/Platforms')
         return dispatch({
             type: GET_PLATFORMS,
             payload: info.data
@@ -58,7 +58,7 @@ export function getPlatforms(){
 
 export function postVideogame(payload){
     return async function(){
-        const response = await axios.post('http://localhost:3001/videogame', payload)
+        const response = await axios.post('/videogame', payload)
         return response
     }
 }
@@ -87,7 +87,7 @@ export function orderByName(payload){
 export function getVideoamesByName(name){
     return async function(dispatch){
         try{
-            var json = await axios.get('http://localhost:3001/videogames?name=' + name)
+            var json = await axios.get('/videogames?name=' + name)
             return dispatch({
                 type: GET_BY_NAME,
                 payload: json.data

@@ -27,7 +27,6 @@ export default function Home(){
         dispatch(getGenres());
     },[allGames])
 
-
     useEffect(() => {
         console.log('games')
         dispatch(getVideogames());
@@ -52,7 +51,6 @@ export default function Home(){
         setCurrentPage(1)
         setOrden(`Ordenado ${e.target.value}` )
     }
-
 
     return (
         <div className='all'>

@@ -25,11 +25,11 @@ export default function AddVideogame(){
     
     useEffect(()=>{
         dispatch(getGenres())
-    }, [])
+    }, [dispatch])
 
     useEffect(()=>{
         dispatch(getPlatforms())
-    }, [])
+    }, [dispatch])
 
     
 
@@ -118,7 +118,7 @@ export default function AddVideogame(){
                     <label className=".form input">Imagen</label>
                     <input
                     type = 'text'
-                    value = {input. background_image}
+                    value = {input.background_image}
                     name= 'background_image'
                         onChange={handleChange} 
                     required
