@@ -99,3 +99,12 @@ Servidor en Node/Express con las siguientes rutas:
 - [ ] **POST /videogame**:
   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de videojuego por body
   - Crea un videojuego en la base de datos
+
+**Home Page**
+![Image text](https://github.com/fedeshirolamy/PI-Videogames/blob/master/HomePage.png?raw=true)
+
+**Main**
+![Image text](https://github.com/fedeshirolamy/PI-Videogames/blob/master/Main.png?raw=true)
+
+**Create Game**
+![Image text](https://github.com/fedeshirolamy/PI-Videogames/blob/master/CreateGame.png?raw=true)
